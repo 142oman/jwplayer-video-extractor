@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JW Player Video Source Extractor</title>
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JW Player Video Source Extractor</h1>
+            <p>Extract video sources from JW Player embedded pages</p>
+        </header>
+
+        <main>
+            <form id="extractForm" class="extract-form">
+                <div class="input-group">
+                    <label for="urlInput">JW Player Page URL:</label>
+                    <input
+                        type="url"
+                        id="urlInput"
+                        placeholder="https://example.com/video-page"
+                        value="https://bysezejataos.com/e/jix4qzh7w8ss/"
+                        required
+                    >
+                </div>
+                <button type="submit" id="extractBtn" class="extract-btn">
+                    <span class="btn-text">Extract Video Sources</span>
+                    <div class="spinner" id="spinner"></div>
+                </button>
+            </form>
+
+            <div id="results" class="results" style="display: none;">
+                <h2>Extracted Video Sources</h2>
+                <div id="sourcesContainer"></div>
+            </div>
+
+            <div id="error" class="error" style="display: none;">
+                <h2>Error</h2>
+                <p id="errorMessage"></p>
+            </div>
+
+            <div id="videoPlayer" class="video-player" style="display: none;">
+                <h2>Video Player</h2>
+                <div class="player-container">
+                    <video id="videoPlayerElement" class="video-js vjs-big-play-centered" controls preload="auto">
+                        <p class="vjs-no-js">
+                            To view this video please enable JavaScript, and consider upgrading to a web browser that
+                            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                        </p>
+                    </video>
+                </div>
+                <div class="player-controls">
+                    <button id="closePlayerBtn" class="close-player-btn">Close Player</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Built with Node.js, Puppeteer, and JW Player analysis</p>
+        </footer>
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@videojs/http-streaming@3.0.2/dist/videojs-http-streaming.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
