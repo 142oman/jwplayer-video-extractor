@@ -23,7 +23,7 @@ Complete guide to deploy the JW Player Video Extractor on Ubuntu Linux.
 ssh user@your-server-ip
 
 # Run the automated setup script
-curl -fsSL https://raw.githubusercontent.com/142oman/jwplayer-video-extractor/main/scripts/setup-ubuntu.sh | bash
+curl -fsSL https://raw.githubusercontent.com/142oman/jwplayer-video-extractor/refs/heads/master/scripts/setup-ubuntu.sh | bash
 ```
 
 ### 2. Clone and Deploy
