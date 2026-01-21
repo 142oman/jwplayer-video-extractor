@@ -124,8 +124,8 @@ async function extractJWPlayerSources(url) {
     // Navigate to the page
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
 
-    // Wait for content to load
-    await page.waitForTimeout(5000);
+    // Wait for content to load (using Promise instead of deprecated waitForTimeout)
+    await new Promise(resolve => setTimeout(resolve, 5000));
 
     // First, let's log what we find on the page for debugging
     const pageContent = await page.evaluate(() => {
@@ -141,8 +141,8 @@ async function extractJWPlayerSources(url) {
 
     console.log('Page analysis:', JSON.stringify(pageContent, null, 2));
 
-    // Wait for content to load
-    await page.waitForTimeout(3000);
+    // Wait for content to load (using Promise instead of deprecated waitForTimeout)
+    await new Promise(resolve => setTimeout(resolve, 3000));
 
     // Extract JW Player configuration
     const jwPlayerData = await page.evaluate(() => {
