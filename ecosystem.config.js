@@ -27,9 +27,15 @@ module.exports = {
       '.git',
       '*.log'
     ],
-    env_vars: {
-      'PUPPETEER_SKIP_CHROMIUM_DOWNLOAD': 'true',
-      'PUPPETEER_EXECUTABLE_PATH': '/usr/bin/chromium-browser'
+    env: {
+      'NODE_ENV': 'development',
+      'PORT': 3000,
+      'PUPPETEER_SKIP_CHROMIUM_DOWNLOAD': 'false'
+    },
+    env_production: {
+      'NODE_ENV': 'production',
+      'PORT': 3000,
+      'PUPPETEER_SKIP_CHROMIUM_DOWNLOAD': 'false'
     }
   }]
 };

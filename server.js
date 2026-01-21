@@ -53,9 +53,30 @@ app.use(express.static('public'));
 async function extractJWPlayerSources(url) {
   let browser;
   try {
+    // Build Puppeteer arguments for server environment
+    let puppeteerArgs = [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--disable-software-rasterizer',
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding',
+      '--disable-features=TranslateUI',
+      '--disable-ipc-flooding-protection'
+    ];
+
+    // Add custom args from environment if specified
+    if (process.env.PUPPETEER_ARGS) {
+      const customArgs = process.env.PUPPETEER_ARGS.split(',').map(arg => arg.trim());
+      puppeteerArgs = puppeteerArgs.concat(customArgs);
+    }
+
+    // Use Puppeteer's bundled Chromium (recommended for Ubuntu 24.04+)
     browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      headless: 'new',
+      args: puppeteerArgs
     });
 
     const page = await browser.newPage();

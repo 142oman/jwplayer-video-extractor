@@ -119,6 +119,29 @@ For the URL `https://bysezejataos.com/e/jix4qzh7w8ss/`, the application successf
 - Master playlist: `https://fin-3dg-b1.r66nv9ed.com/hls2/06/10002/,jix4qzh7w8ss_x,lang/eng/jix4qzh7w8ss_eng,.urlset/master.m3u8`
 - Video segment: `https://fin-3dg-b1.r66nv9ed.com/hls2/06/10002/jix4qzh7w8ss_x/index-v1-a2.m3u8`
 
+## Environment Configuration
+
+Create a `.env` file from the provided template:
+
+```bash
+cp env.example .env
+```
+
+**Important for Ubuntu deployment:**
+```bash
+# Puppeteer Configuration (using bundled Chromium - recommended for Ubuntu 24.04+)
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+
+# Additional server optimization args
+PUPPETEER_ARGS=--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage,--disable-gpu,--disable-software-rasterizer,--disable-background-timer-throttling,--disable-backgrounding-occluded-windows,--disable-renderer-backgrounding,--disable-features=TranslateUI,--disable-ipc-flooding-protection
+```
+
+**Note:** For Ubuntu 24.04+, we use Puppeteer's bundled Chromium (no system Chromium needed):
+- ✅ No Snap-related issues
+- ✅ No DBus/dconf errors
+- ✅ Better stability on servers
+- ✅ Automatic Chromium management
+
 ## Technologies Used
 
 - **Node.js** - Server runtime

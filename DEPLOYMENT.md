@@ -53,8 +53,10 @@ sudo apt-get install -y nodejs
 # Install PM2
 sudo npm install -g pm2
 
-# Install Chromium for Puppeteer
-sudo apt-get install -y chromium-browser
+# Chromium Setup (Ubuntu 24.04+ uses Puppeteer's bundled Chromium)
+# Ubuntu 24.04 only provides Snap Chromium, which causes issues with headless servers
+# We will use Puppeteer's bundled Chromium instead for better compatibility
+echo "Using Puppeteer's bundled Chromium (recommended for Ubuntu 24.04+)"
 
 # Install additional dependencies
 sudo apt-get install -y \
@@ -132,9 +134,8 @@ NODE_ENV=production
 APP_NAME=JW Player Video Extractor
 APP_VERSION=2.0.0
 
-# Puppeteer Settings
-PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+# Puppeteer Settings (Ubuntu 24.04+ - using bundled Chromium)
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
 
 # CORS Settings
 CORS_ORIGIN=https://yourdomain.com
@@ -313,12 +314,33 @@ pm2 logs jwplayer-extractor --lines 100
 
 2. **Puppeteer Chromium issues**
    ```bash
-   # Ensure Chromium is installed
-   which chromium-browser
-   chromium-browser --version
+   # Check that Puppeteer can download its bundled Chromium
+   ls -la node_modules/puppeteer/.local-chromium/ 2>/dev/null || echo "Chromium not downloaded yet"
 
    # Check Puppeteer configuration in .env
-   PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+   # Should be: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false (to allow bundled download)
+
+   # Verify Node.js and Puppeteer versions
+   node --version
+   npm list puppeteer
+   ```
+
+   **For Ubuntu 24.04+ (recommended approach):**
+   ```bash
+   # The setup uses Puppeteer's bundled Chromium automatically
+   # No system Chromium installation needed
+   # This avoids all Snap-related issues
+   ```
+
+   **If you still have issues:**
+   ```bash
+   # Clear Puppeteer cache and reinstall
+   rm -rf node_modules/puppeteer/.local-chromium
+   npm uninstall puppeteer
+   npm install puppeteer
+
+   # Check available disk space
+   df -h
    ```
 
 3. **Memory issues**

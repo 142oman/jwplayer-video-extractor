@@ -20,9 +20,10 @@ sudo apt-get install -y nodejs
 echo "📦 Installing PM2 process manager..."
 sudo npm install -g pm2
 
-# Install Chromium for Puppeteer
-echo "📦 Installing Chromium browser..."
-sudo apt-get install -y chromium-browser
+# Note: Ubuntu 24.04 uses Snap Chromium only
+# We will use Puppeteer's bundled Chromium instead for better compatibility
+echo "📦 Skipping system Chromium installation (Ubuntu 24.04 uses Snap-only)"
+echo "   Puppeteer will use its bundled Chromium binary"
 
 # Install build tools (for native dependencies)
 echo "📦 Installing build tools..."
@@ -92,7 +93,9 @@ echo "📋 Installed versions:"
 echo "  Node.js: $(node --version)"
 echo "  NPM: $(npm --version)"
 echo "  PM2: $(pm2 --version)"
-echo "  Chromium: $(chromium-browser --version 2>/dev/null || echo 'Not found')"
+echo ""
+echo "📝 Note: Using Puppeteer's bundled Chromium (recommended for Ubuntu 24.04)"
+echo "   This avoids Snap-related issues and provides better stability"
 
 echo ""
 echo "🎯 Next steps:"
