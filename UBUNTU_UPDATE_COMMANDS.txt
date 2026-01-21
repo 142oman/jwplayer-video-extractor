@@ -1,0 +1,123 @@
+JW PLAYER VIDEO EXTRACTOR - UBUNTU 24.04 UPDATE & FIX COMMANDS
+================================================================
+
+Run these commands IN ORDER on your Ubuntu 24.04 server to update the code
+and fix the Chromium compatibility issues.
+
+================================================================
+STEP 1: Navigate to your application directory
+================================================================
+
+cd /var/www/jwplayer-video-extractor
+
+================================================================
+STEP 2: Pull the latest fixes from GitHub
+================================================================
+
+git pull origin master
+
+================================================================
+STEP 3: Clean reinstall dependencies (downloads bundled Chromium)
+================================================================
+
+# Remove old dependencies
+rm -rf node_modules package-lock.json
+
+# Fresh install (this downloads Puppeteer's bundled Chromium)
+npm install
+
+================================================================
+STEP 4: Update your environment configuration
+================================================================
+
+# Backup your existing .env file (if you have custom settings)
+cp .env .env.backup 2>/dev/null || true
+
+# Copy the updated template
+cp env.example .env
+
+# Edit the .env file with your settings (optional - defaults are fine)
+# nano .env
+
+================================================================
+STEP 5: Stop the current application
+================================================================
+
+# Stop PM2 processes
+pm2 stop jwplayer-extractor 2>/dev/null || true
+pm2 delete jwplayer-extractor 2>/dev/null || true
+
+================================================================
+STEP 6: Start the updated application
+================================================================
+
+npm run pm2:start
+
+================================================================
+STEP 7: Verify everything is working
+================================================================
+
+# Check PM2 status
+pm2 list
+
+# Check application logs
+pm2 logs jwplayer-extractor --lines 10
+
+# Test health endpoint
+curl http://localhost:3000/health
+
+# Test API info
+curl http://localhost:3000/api/info
+
+================================================================
+QUICK TROUBLESHOOTING COMMANDS
+================================================================
+
+# Check disk space (bundled Chromium needs ~200MB)
+df -h
+
+# Verify Chromium downloaded
+ls -la node_modules/puppeteer/.local-chromium/
+
+# Check PM2 logs for errors
+pm2 logs jwplayer-extractor --lines 20
+
+# Manual Puppeteer test
+node -e "const puppeteer = require('puppeteer'); (async () => { const browser = await puppeteer.launch({headless: 'new', args: ['--no-sandbox']}); console.log('✅ Puppeteer works!'); await browser.close(); })();"
+
+================================================================
+WHAT THIS FIXES
+================================================================
+
+✅ Uses Puppeteer's bundled Chromium (not system Snap Chromium)
+✅ Eliminates DBus/dconf errors
+✅ Eliminates /run/user/0 permission issues
+✅ Works perfectly on Ubuntu 24.04
+✅ No more Snap-related crashes
+✅ Better stability for headless server operation
+
+================================================================
+EXPECTED OUTPUT
+================================================================
+
+After running these commands, you should see:
+- ✅ npm install downloads Chromium automatically
+- ✅ pm2 list shows "jwplayer-extractor" as online
+- ✅ curl http://localhost:3000/health returns success
+- ✅ No more Chromium/Snap errors in logs
+
+================================================================
+COPY-PASTE READY VERSION
+================================================================
+
+cd /var/www/jwplayer-video-extractor && \
+git pull origin master && \
+rm -rf node_modules package-lock.json && \
+npm install && \
+cp .env .env.backup 2>/dev/null || true && \
+cp env.example .env && \
+pm2 stop jwplayer-extractor 2>/dev/null || true && \
+pm2 delete jwplayer-extractor 2>/dev/null || true && \
+npm run pm2:start && \
+pm2 list && \
+curl http://localhost:3000/health
