@@ -2,6 +2,12 @@
 
 Complete guide to deploy the JW Player Video Extractor on Ubuntu Linux.
 
+## 📁 Repository Information
+
+- **GitHub Repository**: https://github.com/142oman/jwplayer-video-extractor
+- **Latest Release**: Check the repository for the latest stable version
+- **Documentation**: See [README.md](README.md) and [API.md](API.md) for details
+
 ## Prerequisites
 
 - Ubuntu 18.04+ server
@@ -17,15 +23,15 @@ Complete guide to deploy the JW Player Video Extractor on Ubuntu Linux.
 ssh user@your-server-ip
 
 # Run the automated setup script
-curl -fsSL https://raw.githubusercontent.com/yourusername/jwplayer-extractor/main/scripts/setup-ubuntu.sh | bash
+curl -fsSL https://raw.githubusercontent.com/142oman/jwplayer-video-extractor/main/scripts/setup-ubuntu.sh | bash
 ```
 
 ### 2. Clone and Deploy
 ```bash
 # Clone your repository
 cd /var/www
-git clone https://github.com/yourusername/jwplayer-extractor.git
-cd jwplayer-extractor
+git clone https://github.com/142oman/jwplayer-video-extractor.git
+cd jwplayer-video-extractor
 
 # Install dependencies and deploy
 npm install
@@ -102,7 +108,7 @@ sudo chown -R $USER:$USER /var/www/jwplayer-extractor
 
 # Clone repository
 cd /var/www/jwplayer-extractor
-git clone https://github.com/yourusername/jwplayer-extractor.git .
+git clone https://github.com/142oman/jwplayer-video-extractor.git .
 ```
 
 ### Step 3: Configure Environment
