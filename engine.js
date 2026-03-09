@@ -451,7 +451,10 @@
     }
 
     function processInline(str) {
-        return str.replace(/@([a-zA-Z0-9_\-]+)/g, '<a href="$1.html">@$1</a>');
+        // Match word characters, hyphens, dots, and slashes for folder paths
+        // Negative lookbehind or trailing strictness usually isn't necessary for basic links,
+        // but we ensure it supports standard path characters.
+        return str.replace(/@([a-zA-Z0-9_\-\.\/]+)/g, '<a href="$1.html">@$1</a>');
     }
 
     // --- ENCRYPTION LOGIC ---
