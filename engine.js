@@ -1,5 +1,5 @@
 (function() {
-    // Prevent FOUC by hiding the body as soon as this script is executed
+    // Prevent FOUC by hiding the body as soon as this script is executed ok
     const style = document.createElement('style');
     style.id = 'txtml-hide-body';
     style.innerHTML = 'body { display: none !important; }';
