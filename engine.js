@@ -1,5 +1,5 @@
 (function() {
-    // Prevent FOUC by hiding the body as soon as this script is executed ok
+    // ok Prevent FOUC by hiding the body as soon as this script is executed
     const style = document.createElement('style');
     style.id = 'txtml-hide-body';
     style.innerHTML = 'body { display: none !important; }';
@@ -451,10 +451,12 @@
     }
 
     function processInline(str) {
-        // Match word characters, hyphens, dots, and slashes for folder paths
-        // Negative lookbehind or trailing strictness usually isn't necessary for basic links,
-        // but we ensure it supports standard path characters.
-        return str.replace(/@([a-zA-Z0-9_\-\.\/]+)/g, '<a href="$1.html">@$1</a>');
+        // Match explicit bracket syntax for links with spaces: @[file name]
+        // or traditional word characters, hyphens, dots, and slashes for folder paths
+        return str.replace(/@(?:\[([^\]]+)\]|([a-zA-Z0-9_\-\.\/]+))/g, (match, p1, p2) => {
+            const path = p1 || p2;
+            return `<a href="${encodeURI(path)}.html">@${path}</a>`;
+        });
     }
 
     // --- ENCRYPTION LOGIC ---
@@ -506,4 +508,3 @@
     };
 
 })();
- 
